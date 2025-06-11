@@ -1,7 +1,6 @@
-// filepath: c:\Users\ADMIN\Desktop\maroc_guid\app\translation\page.tsx
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,24 +9,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Mic, Volume2, Copy, BookOpen, Globe, ImageIcon, MessageSquare, MicIcon } from "lucide-react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 
 export default function TranslationPage() {
-  const searchParams = useSearchParams()
-  const [activeTab, setActiveTab] = useState("text")
   const [sourceText, setSourceText] = useState("")
   const [translatedText, setTranslatedText] = useState("")
   const [isRecording, setIsRecording] = useState(false)
   const [sourceLang, setSourceLang] = useState("fr")
   const [targetLang, setTargetLang] = useState("ar")
-
-  // Handle tab selection from URL
-  useEffect(() => {
-    const tab = searchParams.get("tab")
-    if (tab && ["text", "voice", "image", "phrases"].includes(tab)) {
-      setActiveTab(tab)
-    }
-  }, [searchParams])
 
   const languages = [
     { code: "fr", name: "Français", flag: "🇫🇷" },
@@ -125,7 +113,7 @@ export default function TranslationPage() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <Tabs defaultValue="text" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="text" className="flex items-center space-x-2">
               <MessageSquare className="h-4 w-4" />

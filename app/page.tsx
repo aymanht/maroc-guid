@@ -4,16 +4,11 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, BookOpen, Users, Globe, Camera, Mic, Bell, Trophy, Play, Menu, X } from "lucide-react"
+import { MapPin, BookOpen, Users, Globe, Camera, Mic, Bell, Trophy, Play } from "lucide-react"
 import Link from "next/link"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
 
 export default function HomePage() {
-  const [selectedPersonas, setSelectedPersonas] = useState<string[]>([])
+  const [selectedPersona, setSelectedPersona] = useState<string | null>(null)
 
   const personas = [
     {
@@ -76,8 +71,6 @@ export default function HomePage() {
               <Globe className="h-8 w-8 text-blue-600" />
               <h1 className="text-2xl font-bold text-gray-900">Maroc Guid</h1>
             </div>
-            
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-6">
               <Link href="/translation" className="text-gray-600 hover:text-blue-600">
                 Traduction
@@ -86,7 +79,7 @@ export default function HomePage() {
                 Apprentissage
               </Link>
               <Link href="/location-alerts" className="text-gray-600 hover:text-blue-600">
-                Localisation
+                Alertes Locales
               </Link>
               <Link href="/community" className="text-gray-600 hover:text-blue-600">
                 Communauté
@@ -95,42 +88,7 @@ export default function HomePage() {
                 Profil
               </Link>
             </nav>
-            
-            {/* Mobile Navigation */}
-            <div className="flex items-center space-x-2 md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-gray-600">
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right">
-                  <div className="flex flex-col space-y-4 mt-8">
-                    <Link href="/translation" className="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">
-                      Traduction
-                    </Link>
-                    <Link href="/learning" className="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">
-                      Apprentissage
-                    </Link>
-                    <Link href="/location-alerts" className="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">
-                      Localisation
-                    </Link>
-                    <Link href="/community" className="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">
-                      Communauté
-                    </Link>
-                    <Link href="/profile" className="text-gray-600 hover:text-blue-600 py-2">
-                      Profil
-                    </Link>
-                  </div>
-                </SheetContent>
-              </Sheet>
-              <Button size="sm">Commencer</Button>
-            </div>
-            
-            {/* Desktop Call to Action */}
-            <div className="hidden md:block">
-              <Button>Commencer</Button>
-            </div>
+            <Button>Commencer</Button>
           </div>
         </div>
       </header>
@@ -148,57 +106,16 @@ export default function HomePage() {
 
           {/* Persona Selection */}
           <div className="mb-12">
-            <h3 className="text-2xl font-semibold mb-2">Quel type de voyageur êtes-vous ?</h3>
-            <p className="text-gray-600 mb-6">Sélectionnez un ou plusieurs profils qui vous correspondent.</p>
-            {selectedPersonas.length > 0 && (
-              <div className="mb-4">
-                <p className="text-sm text-blue-600 font-medium">
-                  {selectedPersonas.length} {selectedPersonas.length === 1 ? 'profil sélectionné' : 'profils sélectionnés'}
-                </p>
-                <div className="flex justify-center space-x-4 mt-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setSelectedPersonas([])}
-                  >
-                    Tout désélectionner
-                  </Button>
-                </div>
-              </div>
-            )}
-            {selectedPersonas.length === 0 && (
-              <div className="mb-4">
-                <div className="flex justify-center space-x-4 mt-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setSelectedPersonas(personas.map(p => p.id))}
-                  >
-                    Tout sélectionner
-                  </Button>
-                </div>
-              </div>
-            )}
+            <h3 className="text-2xl font-semibold mb-6">Quel type de voyageur êtes-vous ?</h3>
             <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {personas.map((persona) => (
                 <Card
                   key={persona.id}
-                  className={`cursor-pointer transition-all hover:shadow-lg relative ${
-                    selectedPersonas.includes(persona.id) ? "ring-2 ring-blue-500" : ""
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    selectedPersona === persona.id ? "ring-2 ring-blue-500" : ""
                   }`}
-                  onClick={() => {
-                    setSelectedPersonas(prev => 
-                      prev.includes(persona.id)
-                        ? prev.filter(id => id !== persona.id) // Remove if already selected
-                        : [...prev, persona.id] // Add if not already selected
-                    );
-                  }}
+                  onClick={() => setSelectedPersona(persona.id)}
                 >
-                  {selectedPersonas.includes(persona.id) && (
-                    <div className="absolute top-2 right-2">
-                      <Badge className="bg-blue-500">Sélectionné</Badge>
-                    </div>
-                  )}
                   <CardHeader className="text-center">
                     <div className="text-4xl mb-2">{persona.icon}</div>
                     <CardTitle className="text-lg">{persona.title}</CardTitle>
@@ -209,14 +126,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          <Button 
-            size="lg" 
-            className="text-lg px-8 py-3"
-            disabled={selectedPersonas.length === 0}
-          >
-            {selectedPersonas.length === 0 
-              ? "Sélectionnez au moins un profil" 
-              : "Commencer l'Aventure Culturelle"}
+          <Button size="lg" className="text-lg px-8 py-3">
+            Commencer l'Aventure Culturelle
           </Button>
         </div>
       </section>
@@ -246,35 +157,29 @@ export default function HomePage() {
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold text-center mb-12">Outils Rapides</h3>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Link href="/translation?tab=image">
-              <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <Camera className="h-12 w-12 mx-auto mb-4 text-blue-600" />
-                  <CardTitle>Traduction Photo</CardTitle>
-                  <CardDescription>Photographiez un panneau ou menu pour traduction instantanée</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+            <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader>
+                <Camera className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+                <CardTitle>Traduction Photo</CardTitle>
+                <CardDescription>Photographiez un panneau ou menu pour traduction instantanée</CardDescription>
+              </CardHeader>
+            </Card>
 
-            <Link href="/translation?tab=voice">
-              <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <Mic className="h-12 w-12 mx-auto mb-4 text-green-600" />
-                  <CardTitle>Traduction Vocale</CardTitle>
-                  <CardDescription>Parlez et obtenez une traduction en temps réel</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+            <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader>
+                <Mic className="h-12 w-12 mx-auto mb-4 text-green-600" />
+                <CardTitle>Traduction Vocale</CardTitle>
+                <CardDescription>Parlez et obtenez une traduction en temps réel</CardDescription>
+              </CardHeader>
+            </Card>
 
-            <Link href="/location-alerts">
-              <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <Bell className="h-12 w-12 mx-auto mb-4 text-orange-600" />
-                  <CardTitle>Alertes Locales</CardTitle>
-                  <CardDescription>Recevez des conseils basés sur votre localisation</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+            <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader>
+                <Bell className="h-12 w-12 mx-auto mb-4 text-orange-600" />
+                <CardTitle>Alertes Locales</CardTitle>
+                <CardDescription>Recevez des conseils basés sur votre localisation</CardDescription>
+              </CardHeader>
+            </Card>
           </div>
         </div>
       </section>
@@ -303,7 +208,7 @@ export default function HomePage() {
                 <Globe className="h-6 w-6" />
                 <span className="text-xl font-bold">Maroc Guid</span>
               </div>
-              <p className="text-gray-400">Votre compagnon intelligent pour naviguer la culture Marocaine.</p>
+              <p className="text-gray-400">Votre compagnon intelligent pour naviguer la culture marocaine.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Fonctionnalités</h4>
