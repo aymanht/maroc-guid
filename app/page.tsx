@@ -4,12 +4,11 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, BookOpen, Users, Globe, Camera, Mic, Bell, Trophy, Play, Menu } from "lucide-react"
+import { MapPin, BookOpen, Users, Globe, Camera, Mic, Bell, Trophy, Play } from "lucide-react"
 import Link from "next/link"
 
 export default function HomePage() {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const personas = [
     {
@@ -72,18 +71,6 @@ export default function HomePage() {
               <Globe className="h-8 w-8 text-blue-600" />
               <h1 className="text-2xl font-bold text-gray-900">Maroc Guid</h1>
             </div>
-            
-            {/* Mobile Menu Button */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-6">
               <Link href="/translation" className="text-gray-600 hover:text-blue-600">
                 Traduction
@@ -101,30 +88,7 @@ export default function HomePage() {
                 Profil
               </Link>
             </nav>
-
-            <Button className="hidden md:block">Commencer</Button>
-          </div>
-
-          {/* Mobile Navigation Menu */}
-          <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} pt-4`}>
-            <nav className="flex flex-col space-y-4">
-              <Link href="/translation" className="text-gray-600 hover:text-blue-600 py-2">
-                Traduction
-              </Link>
-              <Link href="/learning" className="text-gray-600 hover:text-blue-600 py-2">
-                Apprentissage
-              </Link>
-              <Link href="/location-alerts" className="text-gray-600 hover:text-blue-600 py-2">
-                Alertes Locales
-              </Link>
-              <Link href="/community" className="text-gray-600 hover:text-blue-600 py-2">
-                Communauté
-              </Link>
-              <Link href="/profile" className="text-gray-600 hover:text-blue-600 py-2">
-                Profil
-              </Link>
-              <Button className="w-full">Commencer</Button>
-            </nav>
+            <Button>Commencer</Button>
           </div>
         </div>
       </header>
