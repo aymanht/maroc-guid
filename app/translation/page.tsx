@@ -1,3 +1,4 @@
+// filepath: c:\Users\ADMIN\Desktop\maroc_guid\app\translation\page.tsx
 "use client"
 
 import { useState, useEffect } from "react"
@@ -22,7 +23,7 @@ export default function TranslationPage() {
 
   // Handle tab selection from URL
   useEffect(() => {
-    const tab = searchParams?.get("tab")
+    const tab = searchParams.get("tab")
     if (tab && ["text", "voice", "image", "phrases"].includes(tab)) {
       setActiveTab(tab)
     }
