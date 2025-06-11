@@ -6,7 +6,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "CulturalBridge - Votre Guide Culturel Intelligent",
+  title: "Maroc Guid- Votre Guide Culturel Intelligent",
   description: "Application de traduction et conseils culturels avec IA pour voyageurs",
     generator: 'v0.dev'
 }
