@@ -9,6 +9,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    optimizeCss: true,
+  },
+  output: 'standalone',
   async headers() {
     return [
       {
