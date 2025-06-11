@@ -1,0 +1,33 @@
+{
+  "name": "Maroc Guid - Your Cultural Guide",
+  "short_name": "MarocGuid",
+  "description": "Your intelligent cultural guide for exploring Morocco",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/placeholder-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/placeholder-logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/placeholder.jpg",
+      "sizes": "640x320",
+      "type": "image/jpeg"
+    }
+  ]
+}
